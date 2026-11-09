@@ -1,30 +1,20 @@
-# kindle-reads
+# skills
 
-An agent skill that finds a few fresh, good articles, packages the complete originals and their images into one clean EPUB, and emails it to your Kindle.
+Agent skills. Each folder is one self-contained skill: a `SKILL.md` and any scripts it needs.
 
-- [SKILL.md](SKILL.md): how the agent chooses, captures, checks and sends.
-- [scripts/build_epub.py](scripts/build_epub.py): builds the EPUB from a JSON manifest and HTML fragments. Python 3 standard library only.
+| Skill | What it does |
+| --- | --- |
+| [kindle-reads](kindle-reads/SKILL.md) | Finds a few fresh, good articles, packages the complete originals and their images into one clean EPUB, and emails it to your Kindle. |
 
 ## Install
 
-Clone into your agent's skills folder, for example:
+Clone the repo, then link the skills you want into your agent's skills folder:
 
 ```bash
-git clone https://github.com/<owner>/kindle-reads ~/.claude/skills/kindle-reads
+ln -s "$PWD/kindle-reads" ~/.claude/skills/kindle-reads
 ```
 
-Then ask for it: "Find four good articles from the last day for my Kindle."
+## Notes
 
-The agent needs a browser signed in to X (for Grok) and to your mail, `ffmpeg` for images, and your Kindle address with an approved sender. Addresses come from your request; none are stored in the skill.
-
-## Build an EPUB by hand
-
-```bash
-python3 scripts/build_epub.py book.json out/reads.epub
-```
-
-The manifest format is documented at the top of the script. The build fails on remote images, video and other content it cannot embed, so nothing is dropped silently.
-
-## Content
-
-The EPUBs contain other people's writing in full. They are for your own reading; keep them private.
+- kindle-reads needs a browser signed in to X (for Grok) and to your mail, `ffmpeg` for images, and a Kindle address with an approved sender. Addresses come from your request; none are stored in the skill.
+- The EPUBs it builds contain other people's writing in full. They are for your own reading; keep them private.
