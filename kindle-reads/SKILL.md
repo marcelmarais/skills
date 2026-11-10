@@ -1,6 +1,6 @@
 ---
 name: kindle-reads
-description: Find a few fresh, genuinely good articles (by default two from Hacker News and two from X with Grok's help), package the complete originals and their images into one clean EPUB, and email it to the user's Kindle. Use whenever the user asks for articles, reads or a digest for their Kindle or e-reader, wants something good to read sent to them, or asks for web articles turned into an EPUB, even if they never say "EPUB".
+description: Find fresh, light, enjoyable articles about AI agents and new ways of working with tools like Grok Bot (by default two from Hacker News and two from X with Grok's help), package the complete originals and their images into one clean EPUB, and email it to the user's Kindle. Use whenever the user asks for articles, reads or a digest for their Kindle or e-reader, wants something good to read sent to them, or asks for web articles turned into an EPUB, even if they never say "EPUB".
 ---
 
 # Kindle reads
@@ -12,11 +12,20 @@ The user wants to open their Kindle and find a few articles worth their time, ex
 Take these from the request, then from memory; ask only for what is still missing:
 
 - how many articles and from where (default: two from Hacker News, two from X)
-- topics and tone
+- topics and tone (use the specific defaults below unless the user requests something else)
 - freshness window (default: originally published in the last 24 hours)
 - the Kindle address and the sender account. They are the user's own details: never write them into this skill or any shared file.
 
 Honour named exceptions and past complaints ("that one read like an ad", "too old").
+
+### Default topics and reading style
+
+- **Subject:** AI agents, personal AI assistants, and new ways of working with tools like Grok Bot (Grokbot), OpenClaw, Claude Code and Codex. Focus on what people actually do with these tools and how their daily work or life changes.
+- **Reading experience:** fun, inspiring and informational; keep it fairly light. Choose articles someone would enjoy reading on a Kindle for curiosity and inspiration, without needing to study a technical report.
+- **Strong fits:** independent first-person stories, amusing or surprising agent experiments, creative personal projects, and practical accounts of useful workflows. A specific tool name alone does not make an article a fit.
+- **Exclude:** dense technical papers, research reports, benchmark-heavy analyses, implementation deep dives, generic AI industry news, and promotional content. Do not drift into these categories just to fill the requested number of articles.
+
+Carry this subject and reading-style brief into the Grok prompts and every selection decision; do not reduce it to a generic search for popular AI articles.
 
 ## 2. Find candidates
 
@@ -37,6 +46,7 @@ curl -s --get "https://hn.algolia.com/api/v1/search_by_date" --data-urlencode "t
 Read every finalist in full before picking it.
 
 - **Fresh.** Check the date on the article itself (`article:published_time`, a `<time>` element, the visible date). A submission or repost date proves nothing.
+- **On brief.** Check both the subject and the reading experience against the defaults above or the user's explicit replacement brief. Freshness and popularity do not compensate for a dense, promotional or off-topic read.
 - **Worth reading.** Prefer independent first-person stories, experiments, creative uses and practical experience. Skip vendor pitches, launch posts, promotional tutorials, pieces that end in a funnel, and dense papers unless asked for.
 - **Complete.** If an article is paywalled or cannot be captured whole, pick another.
 
